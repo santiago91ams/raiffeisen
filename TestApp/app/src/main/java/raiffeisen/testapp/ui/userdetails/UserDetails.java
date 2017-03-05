@@ -28,6 +28,8 @@ import raiffeisen.testapp.generic.RaiffeisenActivity;
 import raiffeisen.testapp.generic.RaiffeisenApplication;
 import raiffeisen.testapp.helper.Util;
 import raiffeisen.testapp.model.User;
+import uk.co.senab.photoview.PhotoView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * Created by Ghita on 05/03/2017.
@@ -41,6 +43,12 @@ public class UserDetails extends RaiffeisenActivity {
 
     @BindView(R.id.profile_pic)
     CircleImageView profilPic;
+
+    @BindView(R.id.pinch_pic)
+    PhotoView pinchPhoto;
+
+    @BindView(R.id.pinch_pic_frame)
+    FrameLayout pinchFrame;
 
     @BindView(R.id.username)
     TextView username;
@@ -75,7 +83,20 @@ public class UserDetails extends RaiffeisenActivity {
         Picasso.with(this).load(user.getPicture().getLarge()).into(profilPic, new Callback() {
             @Override
             public void onSuccess() {
+                profilPic.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                            case MotionEvent.ACTION_POINTER_DOWN:
+                                if (util.spacing(event) > 50f) {
+                                    goPinch();
+                                }
 
+                                break;
+                        }
+                        return true;
+                    }
+                });
             }
 
             @Override
@@ -167,5 +188,31 @@ public class UserDetails extends RaiffeisenActivity {
     }
 
 
+    void goPinch() {
+
+        final PhotoViewAttacher attacher = new PhotoViewAttacher(pinchPhoto);
+        Picasso.with(this).load(user.getPicture().getLarge()).into(pinchPhoto, new Callback() {
+            @Override
+            public void onSuccess() {
+                attacher.update();
+                pinchFrame.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if(pinchFrame.getVisibility()==View.VISIBLE){
+            pinchFrame.setVisibility(View.GONE);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
 }

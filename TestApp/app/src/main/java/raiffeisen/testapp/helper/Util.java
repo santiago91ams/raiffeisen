@@ -69,6 +69,14 @@ public class Util {
 
     }
 
+
+    /** Determine the space between the first two fingers */
+    public float spacing(MotionEvent event) {
+        float x = event.getX(0) - event.getX(1);
+        float y = event.getY(0) - event.getY(1);
+        return (float) Math.sqrt(x * x + y * y);
+    }
+
     public String getClearPhoneNumber(String phone) {
 
         phone = phone.replace("/[^0-9]/g", "");
