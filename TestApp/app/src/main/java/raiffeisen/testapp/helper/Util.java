@@ -5,8 +5,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.Calendar;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import raiffeisen.testapp.model.User;
 import raiffeisen.testapp.model.UsersListResponse;
 
 import static java.util.Calendar.DATE;
@@ -44,6 +48,47 @@ public class Util {
         return usersList;
     }
 
+
+        /*
+    * Type is for picture type
+    *  0 -  thumbnail, medium
+    *  1 - large
+    *  */
+    public void setPicture(Context context, String url, View view, int type) {
+
+        switch (type) {
+            case 0:
+                Picasso.with(context).load(url).into((CircleImageView) view);
+                break;
+            case 1:
+                Picasso.with(context).load(url).into((ImageView) view);
+                break;
+            default:
+                return;
+        }
+
+    }
+
+
+
+    public String getAgeLocation(User user){
+        String dob = user.getDob();
+        String year = dob.substring(0,4);
+        String month = dob.substring(5,7);
+        String day = dob.substring(8,10);
+
+        Calendar b = Calendar.getInstance();
+
+        b.get(HOUR_OF_DAY);
+        b.get(MINUTE);
+
+        int diff = b.get(YEAR) - Integer.valueOf(year);
+        if (Integer.valueOf(month) > b.get(MONTH) || ((Integer.valueOf(month) == b.get(MONTH)) && Integer.valueOf(day) > b.get(DATE))) {
+            diff--;
+        }
+
+        return String.valueOf(diff + " years from " + user.getNat());
+    }
 }
 
 
