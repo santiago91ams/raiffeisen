@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -48,7 +50,20 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
 
     @Override
     public void onBindViewHolder(UsersViewHolder holder, final int position) {
+        util.setPicture(context, usersList.getUserList().get(position).getPicture().getThumbnail(), holder.profilePic, 0);
+        holder.username.setText(WordUtils.capitalize(usersList.getUserList().get(position).getName().getFirst())
+                + " " + WordUtils.capitalize(usersList.getUserList().get(position).getName().getLast()));
+        holder.ageLocation.setText(WordUtils.capitalize(util.getAgeLocation(usersList.getUserList().get(position))));
+        holder.localTime.setText(util.getHour());
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userClick != null) {
+                    userClick.onDetailsJobClicked(usersList.getUserList().get(position));
+                }
+            }
+        });
 
     }
 

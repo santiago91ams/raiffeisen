@@ -3,6 +3,7 @@ package raiffeisen.testapp.generic;
 import android.app.Application;
 import android.content.res.Resources;
 
+import raiffeisen.testapp.generic.dagger.DaggerRaiffeisenComponent;
 import raiffeisen.testapp.generic.dagger.RaiffeisenComponent;
 import raiffeisen.testapp.generic.dagger.RaiffeisenModule;
 

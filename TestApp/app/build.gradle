@@ -32,9 +32,19 @@ dependencies {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     // Retrofit 2
 =======
 =======
+=======
+
+    // library photo Pinch
+    compile 'com.github.chrisbanes:PhotoView:1.3.1'
+    //WordUtils.capitalize
+    compile 'org.apache.commons:commons-lang3:3.1'
+    //Picasso
+    compile 'com.squareup.picasso:picasso:2.4.0'
+>>>>>>> 4616816866b68c3fc5ab1215b95087315cc3ac5b
     // CircleImageView
     compile 'de.hdodenhof:circleimageview:2.1.0'
 >>>>>>> ea69985ccd8e835956868214170d7770ce97598a
