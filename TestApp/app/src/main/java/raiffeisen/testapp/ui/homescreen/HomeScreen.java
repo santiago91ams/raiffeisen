@@ -23,6 +23,7 @@ import butterknife.Unbinder;
 import raiffeisen.testapp.R;
 import raiffeisen.testapp.generic.RaiffeisenActivity;
 import raiffeisen.testapp.generic.RaiffeisenApplication;
+import raiffeisen.testapp.helper.EndlessRecyclerViewScrollListener;
 import raiffeisen.testapp.helper.Util;
 import raiffeisen.testapp.helper.adapter.UsersListAdapter;
 import raiffeisen.testapp.model.User;
@@ -48,7 +49,7 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
     private Unbinder unbinder;
     private boolean isFirstPage = true;
     private UsersListAdapter adapter;
-
+    private EndlessRecyclerViewScrollListener scrollListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,13 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
         showRecycleView();
     }
 
+    @Override
+    public void showUsersListNextPage(UsersListResponse usersListResponse) {
+        util.setUsersList(usersListResponse);
+        adapter.notifyItemRangeInserted(adapter.getItemCount(), util.getUsersList().getUserList().size() - 1);
+        scrollListener.resetState();
+    }
+
 
     private void showRecycleView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -85,6 +93,17 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
         adapter.setUserClickListener(this);
         recyclerView.setAdapter(adapter);
 
+        scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                loadNextDataPage(util.getPageNumberToBeLoaded());
+            }
+
+        };
+
+        recyclerView.addOnScrollListener(scrollListener);
     }
 
 
@@ -92,6 +111,11 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
     public void onDetailsJobClicked(User user) {
 
 
+    }
+
+
+    private void loadNextDataPage(String page) {
+        presenter.getUsersList(page, this, isFirstPage);
     }
 
 

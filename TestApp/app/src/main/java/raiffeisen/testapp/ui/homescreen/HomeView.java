@@ -9,5 +9,6 @@ import raiffeisen.testapp.model.UsersListResponse;
 public interface HomeView {
 
     void showUsersListFirstPage(UsersListResponse usersListResponse);
+    void showUsersListNextPage(UsersListResponse usersListResponse);
 }
 

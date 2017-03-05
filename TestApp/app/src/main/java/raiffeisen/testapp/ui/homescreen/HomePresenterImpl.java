@@ -31,6 +31,8 @@ public class HomePresenterImpl implements HomePresenter {
                 Log.d(TAG, "succes");
                 if(isFirstPage){
                     view.showUsersListFirstPage(result);
+                } else {
+                    view.showUsersListNextPage(result);
                 }
 
             }
