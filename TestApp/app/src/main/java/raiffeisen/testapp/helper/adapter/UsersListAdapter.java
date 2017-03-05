@@ -54,8 +54,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
         holder.username.setText(WordUtils.capitalize(usersList.getUserList().get(position).getName().getFirst())
                 + " " + WordUtils.capitalize(usersList.getUserList().get(position).getName().getLast()));
         holder.ageLocation.setText(WordUtils.capitalize(util.getAgeLocation(usersList.getUserList().get(position))));
-        holder.localTime.setText(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + ":"
-                + Calendar.getInstance().get(Calendar.MINUTE));
+        holder.localTime.setText(util.getHour());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

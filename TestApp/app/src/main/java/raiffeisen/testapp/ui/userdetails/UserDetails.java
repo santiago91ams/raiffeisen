@@ -129,12 +129,14 @@ public class UserDetails extends RaiffeisenActivity {
         TextView contactTypeValueTxt = ButterKnife.findById(tabDetails, R.id.icon_contact_type_value);
         TextView contactTypeTxt = ButterKnife.findById(tabDetails, R.id.icon_contact_type);
         ImageView contactPic = ButterKnife.findById(tabDetails, R.id.icon_pic);
+        ImageView flag = ButterKnife.findById(tabDetails, R.id.flag);
 
         switch (type) {
             case 0:
                 contactPic.setImageDrawable(getResources().getDrawable(R.drawable.ic_phone_black_24dp));
                 contactTypeTxt.setText("Phone");
                 contactTypeValueTxt.setText(user.getPhone());
+                util.setFlags(user, flag, contactTypeValueTxt,this);
                 tabDetails.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -143,6 +145,7 @@ public class UserDetails extends RaiffeisenActivity {
                         startActivity(intent);
                     }
                 });
+
                 break;
             case 1:
                 contactPic.setImageDrawable(getResources().getDrawable(R.drawable.ic_email_black_24dp));

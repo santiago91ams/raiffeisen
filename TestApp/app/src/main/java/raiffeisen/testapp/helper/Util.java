@@ -1,17 +1,23 @@
 package raiffeisen.testapp.helper;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.net.ConnectivityManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import raiffeisen.testapp.R;
 import raiffeisen.testapp.model.User;
 import raiffeisen.testapp.model.UsersListResponse;
 
@@ -113,6 +119,41 @@ public class Util {
 
         return cm.getActiveNetworkInfo() != null;
     }
+
+    public void setFlags(User user, ImageView iv, TextView tv, Context context) {
+
+        InputStream ims;
+        try {
+            ims = context.getAssets().open(user.getNat() + ".png");
+            Drawable d = Drawable.createFromStream(ims, null);
+            iv.setImageDrawable(d);
+            iv.setVisibility(View.VISIBLE);
+
+            String phone = user.getPhone();
+            if (phone.startsWith("(")) {
+                phone = phone.substring(phone.lastIndexOf(')') + 2);
+                tv.setText(phone);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public String getHour() {
+        int min = Calendar.getInstance().get(Calendar.MINUTE);
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+
+        if (min < 10 && hour < 10) {
+            return "0" + hour + ":" + "0" + min;
+        } else if (min < 10) {
+            return hour + ":" + "0" + min;
+        } else if (hour < 10) {
+            return "0" + hour + ":" + min;
+        } else return hour + ":" + min;
+    }
+
 
 }
 

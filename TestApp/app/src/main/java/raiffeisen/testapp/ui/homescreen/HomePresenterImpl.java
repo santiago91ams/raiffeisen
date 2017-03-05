@@ -40,6 +40,7 @@ public class HomePresenterImpl implements HomePresenter {
             @Override
             public void onFailure(String code) {
                 Log.d(TAG, "failed");
+                view.errorMessage(code);
             }
         }, page);
     }

@@ -10,5 +10,6 @@ public interface HomeView {
 
     void showUsersListFirstPage(UsersListResponse usersListResponse);
     void showUsersListNextPage(UsersListResponse usersListResponse);
+    void errorMessage(String errCode);
 }
 

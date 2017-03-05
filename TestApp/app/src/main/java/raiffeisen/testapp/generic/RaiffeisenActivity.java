@@ -10,7 +10,10 @@ import android.widget.Toast;
 
 public class RaiffeisenActivity extends AppCompatActivity implements RaiffeisenView {
 
-    private boolean isInForeground;
+
+    // boolean to check that app is not in background when
+    // we change the view after ws response
+    public boolean isInForeground;
 
     @Override
     public void showMessage(String message) {
