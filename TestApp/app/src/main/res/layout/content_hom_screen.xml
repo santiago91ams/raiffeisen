@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="raiffeisen.testapp.HomScreen"
+    tools:context="raiffeisen.testapp.ui.HomScreen"
     tools:showIn="@layout/activity_hom_screen">
 
     <TextView
