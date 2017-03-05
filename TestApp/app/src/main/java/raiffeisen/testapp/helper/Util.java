@@ -69,6 +69,11 @@ public class Util {
 
     }
 
+    public String getClearPhoneNumber(String phone) {
+
+        phone = phone.replace("/[^0-9]/g", "");
+        return phone;
+    }
 
 
     public String getAgeLocation(User user){

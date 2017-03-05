@@ -90,6 +90,49 @@ public class UserDetails extends RaiffeisenActivity {
             id.setText("ID: " + user.getId().getName() + " " + user.getId().getValue());
         } else id.setVisibility(View.INVISIBLE);
 
+        for (int i = 0; i < 3; i++) {
+            userDetailsLayout.addView(getUserTabDetails(i));
+        }
+
+    }
+
+    /*
+  * type of contact field
+  * 0 - phone
+  * 1 - email
+  * 2 - address
+  * easy to add more*/
+    private View getUserTabDetails(int type) {
+
+        View tabDetails = LayoutInflater.from(this).inflate(R.layout.user_contact_tab, userDetailsLayout, false);
+        TextView contactTypeValueTxt = ButterKnife.findById(tabDetails, R.id.icon_contact_type_value);
+        TextView contactTypeTxt = ButterKnife.findById(tabDetails, R.id.icon_contact_type);
+        ImageView contactPic = ButterKnife.findById(tabDetails, R.id.icon_pic);
+
+        switch (type) {
+            case 0:
+                contactPic.setImageDrawable(getResources().getDrawable(R.drawable.ic_phone_black_24dp));
+                contactTypeTxt.setText("Phone");
+                contactTypeValueTxt.setText(user.getPhone());
+
+                break;
+            case 1:
+                contactPic.setImageDrawable(getResources().getDrawable(R.drawable.ic_email_black_24dp));
+                contactTypeTxt.setText("Email");
+                contactTypeValueTxt.setText(user.getEmail());
+
+                break;
+            case 2:
+                contactPic.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_location_black_24dp));
+                contactTypeTxt.setText("Address");
+                contactTypeValueTxt.setText(WordUtils.capitalize(user.getLocation().getCity()) + ", " +
+                        (user.getLocation().getStreet()));
+
+                break;
+            default:
+        }
+
+        return tabDetails;
     }
 
 
