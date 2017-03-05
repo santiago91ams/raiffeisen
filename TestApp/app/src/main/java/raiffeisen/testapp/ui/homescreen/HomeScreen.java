@@ -72,7 +72,7 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
             final IntentFilter filters = new IntentFilter();
             filters.addAction("android.net.conn.CONNECTIVITY_CHANGE");
             super.registerReceiver(new ConnectivityChangeReceiver(this), filters);
-            Toast.makeText(this, "Please connect to the internet!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.internet_connect), Toast.LENGTH_SHORT).show();
 
         } else {
             showRecycleView();
@@ -104,7 +104,7 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
     @Override
     public void errorMessage(String errCode) {
         if(isInForeground)
-            Toast.makeText(this,"An error has occur, error code: " + errCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getResources().getString(R.string.error_message) + errCode, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -135,10 +135,10 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
     public void onDetailsJobClicked(User user) {
 
         Bundle bundle = new Bundle();
-        bundle.putParcelable("user", user);
+        bundle.putParcelable(getString(R.string.user), user);
 
         Intent intent = new Intent(HomeScreen.this, UserDetails.class);
-        intent.putExtra("user", bundle);
+        intent.putExtra(getString(R.string.user), bundle);
         startActivity(intent);
 
     }
@@ -163,7 +163,7 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
 
     @OnClick(R.id.fab)
     public void onFabClick() {
-        Toast.makeText(this, "I am a floating button!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.floating_button_click), Toast.LENGTH_SHORT).show();
     }
 
     public void internetConnection() {
