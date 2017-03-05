@@ -53,6 +53,7 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
     private boolean isFirstPage = true;
     private UsersListAdapter adapter;
     private EndlessRecyclerViewScrollListener scrollListener;
+    private ConnectivityChangeReceiver connectivityChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,15 +64,17 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
 
+        connectivityChangeReceiver = new ConnectivityChangeReceiver(this);
+
         // check for internet, if no internet and user list is empty, register listener
         // to do call when has connection
         if (util.getUsersList() == null && util.isNetworkConnected(this)) {
             presenter.getUsersList(util.getPageNumberToBeLoaded(), this, isFirstPage);
 
         } else if (util.getUsersList() == null && !util.isNetworkConnected(this)) {
-            final IntentFilter filters = new IntentFilter();
-            filters.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-            super.registerReceiver(new ConnectivityChangeReceiver(this), filters);
+            final IntentFilter filter = new IntentFilter();
+            filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+            super.registerReceiver(connectivityChangeReceiver, filter);
             Toast.makeText(this, getString(R.string.internet_connect), Toast.LENGTH_SHORT).show();
 
         } else {
@@ -153,6 +156,7 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        unregisterReceiver(connectivityChangeReceiver);
     }
 
     @Override

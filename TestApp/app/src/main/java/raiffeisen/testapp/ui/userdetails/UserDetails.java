@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -59,6 +60,7 @@ public class UserDetails extends RaiffeisenActivity {
     @BindView(R.id.user_details_layout)
     LinearLayout userDetailsLayout;
 
+    private String TAG = "UserDetails";
     private Unbinder unbinder;
     private User user;
 
@@ -71,9 +73,9 @@ public class UserDetails extends RaiffeisenActivity {
         unbinder = ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("user");
+        Bundle bundle = intent.getBundleExtra(getString(R.string.user));
 
-        user = (User) bundle.get("user");
+        user = (User) bundle.get(getString(R.string.user));
 
         initView();
     }
@@ -203,7 +205,7 @@ public class UserDetails extends RaiffeisenActivity {
 
             @Override
             public void onError() {
-
+                Log.d(TAG, "picasso photoviewattacher error");
             }
         });
     }
