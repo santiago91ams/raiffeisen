@@ -30,7 +30,11 @@ dependencies {
     compile 'com.android.support:design:25.1.0'
     testCompile 'junit:junit:4.12'
 
+<<<<<<< HEAD
     // Retrofit 2
+=======
+    // Retrofit
+>>>>>>> c2e211c661a8bc93881138d5a50896d5e7cd0426
     compile 'com.squareup.retrofit2:retrofit:2.0.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     // Butter Knife
