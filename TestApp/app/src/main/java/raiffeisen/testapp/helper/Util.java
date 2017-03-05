@@ -1,12 +1,14 @@
 package raiffeisen.testapp.helper;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.net.InetAddress;
 import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -49,11 +51,11 @@ public class Util {
     }
 
 
-        /*
-    * Type is for picture type
-    *  0 -  thumbnail, medium
-    *  1 - large
-    *  */
+    /*
+* Type is for picture type
+*  0 -  thumbnail, medium
+*  1 - large
+*  */
     public void setPicture(Context context, String url, View view, int type) {
 
         switch (type) {
@@ -70,7 +72,9 @@ public class Util {
     }
 
 
-    /** Determine the space between the first two fingers */
+    /**
+     * Determine the space between the first two fingers
+     */
     public float spacing(MotionEvent event) {
         float x = event.getX(0) - event.getX(1);
         float y = event.getY(0) - event.getY(1);
@@ -84,11 +88,11 @@ public class Util {
     }
 
 
-    public String getAgeLocation(User user){
+    public String getAgeLocation(User user) {
         String dob = user.getDob();
-        String year = dob.substring(0,4);
-        String month = dob.substring(5,7);
-        String day = dob.substring(8,10);
+        String year = dob.substring(0, 4);
+        String month = dob.substring(5, 7);
+        String day = dob.substring(8, 10);
 
         Calendar b = Calendar.getInstance();
 
@@ -102,6 +106,14 @@ public class Util {
 
         return String.valueOf(diff + " years from " + user.getNat());
     }
+
+
+    public boolean isNetworkConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
+    }
+
 }
 
 

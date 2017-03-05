@@ -1,6 +1,7 @@
 package raiffeisen.testapp.ui.homescreen;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,6 +24,7 @@ import butterknife.Unbinder;
 import raiffeisen.testapp.R;
 import raiffeisen.testapp.generic.RaiffeisenActivity;
 import raiffeisen.testapp.generic.RaiffeisenApplication;
+import raiffeisen.testapp.helper.ConnectivityChangeReceiver;
 import raiffeisen.testapp.helper.EndlessRecyclerViewScrollListener;
 import raiffeisen.testapp.helper.Util;
 import raiffeisen.testapp.helper.adapter.UsersListAdapter;
@@ -63,8 +65,14 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
 
 
         // if the activity is destroyed from stack, don't make another call for list
-        if(util.getUsersList()==null){
+        if (util.getUsersList() == null && util.isNetworkConnected(this)) {
             presenter.getUsersList(util.getPageNumberToBeLoaded(), this, isFirstPage);
+
+        } else if (util.getUsersList() == null && !util.isNetworkConnected(this)) {
+            final IntentFilter filters = new IntentFilter();
+            filters.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+            super.registerReceiver(new ConnectivityChangeReceiver(this), filters);
+            Toast.makeText(this,"Please connect to the internet!",Toast.LENGTH_SHORT).show();
         } else {
             showRecycleView();
         }
@@ -146,6 +154,14 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
     @OnClick(R.id.fab)
     public void onFabClick() {
         Toast.makeText(this, "I am a floating button!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void internetConnection() {
+
+        if (util.getUsersList() == null && util.isNetworkConnected(this)) {
+            presenter.getUsersList(util.getPageNumberToBeLoaded(), this, isFirstPage);
+        }
+
     }
 
 }
