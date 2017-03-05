@@ -31,8 +31,13 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // Retrofit 2
 =======
+=======
+    // CircleImageView
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+>>>>>>> ea69985ccd8e835956868214170d7770ce97598a
     // Retrofit
 >>>>>>> c2e211c661a8bc93881138d5a50896d5e7cd0426
     compile 'com.squareup.retrofit2:retrofit:2.0.0'
