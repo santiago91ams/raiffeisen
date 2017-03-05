@@ -62,7 +62,12 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
         getSupportActionBar().setTitle(null);
 
 
-        presenter.getUsersList(util.getPageNumberToBeLoaded(), this, isFirstPage);
+        // if the activity is destroyed from stack, don't make another call for list
+        if(util.getUsersList()==null){
+            presenter.getUsersList(util.getPageNumberToBeLoaded(), this, isFirstPage);
+        } else {
+            showRecycleView();
+        }
 
 
     }

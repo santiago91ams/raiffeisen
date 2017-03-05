@@ -114,20 +114,42 @@ public class UserDetails extends RaiffeisenActivity {
                 contactPic.setImageDrawable(getResources().getDrawable(R.drawable.ic_phone_black_24dp));
                 contactTypeTxt.setText("Phone");
                 contactTypeValueTxt.setText(user.getPhone());
-
+                tabDetails.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:" + util.getClearPhoneNumber(user.getPhone())));
+                        startActivity(intent);
+                    }
+                });
                 break;
             case 1:
                 contactPic.setImageDrawable(getResources().getDrawable(R.drawable.ic_email_black_24dp));
                 contactTypeTxt.setText("Email");
                 contactTypeValueTxt.setText(user.getEmail());
-
+                tabDetails.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/html");
+                        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{user.getEmail()});
+                        startActivity(Intent.createChooser(intent, ""));
+                    }
+                });
                 break;
             case 2:
                 contactPic.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_location_black_24dp));
                 contactTypeTxt.setText("Address");
                 contactTypeValueTxt.setText(WordUtils.capitalize(user.getLocation().getCity()) + ", " +
                         (user.getLocation().getStreet()));
-
+                tabDetails.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String map = "http://maps.google.co.in/maps?q=" + user.getLocation().getStreet();
+                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(map));
+                        startActivity(i);
+                    }
+                });
                 break;
             default:
         }
