@@ -28,6 +28,7 @@ import raiffeisen.testapp.helper.Util;
 import raiffeisen.testapp.helper.adapter.UsersListAdapter;
 import raiffeisen.testapp.model.User;
 import raiffeisen.testapp.model.UsersListResponse;
+import raiffeisen.testapp.ui.userdetails.UserDetails;
 
 public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersListAdapter.UserClickListener {
 
@@ -110,6 +111,12 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
     @Override
     public void onDetailsJobClicked(User user) {
 
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("user", user);
+
+        Intent intent = new Intent(HomeScreen.this, UserDetails.class);
+        intent.putExtra("user", bundle);
+        startActivity(intent);
 
     }
 

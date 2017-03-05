@@ -10,6 +10,7 @@ import raiffeisen.testapp.helper.Util;
 import raiffeisen.testapp.service.WebServiceCall;
 import raiffeisen.testapp.ui.homescreen.HomePresenterImpl;
 import raiffeisen.testapp.ui.homescreen.HomeScreen;
+import raiffeisen.testapp.ui.userdetails.UserDetails;
 import retrofit2.Retrofit;
 
 /**
@@ -28,5 +29,6 @@ public interface RaiffeisenComponent {
     void inject(HomeScreen o);
     void inject(HomePresenterImpl o);
     void inject(Util o);
+    void inject(UserDetails o);
 
 }
