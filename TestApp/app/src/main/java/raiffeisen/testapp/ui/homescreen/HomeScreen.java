@@ -64,7 +64,6 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
 
-        connectivityChangeReceiver = new ConnectivityChangeReceiver(this);
 
         // check for internet, if no internet and user list is empty, register listener
         // to do call when has connection
@@ -74,6 +73,7 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
         } else if (util.getUsersList() == null && !util.isNetworkConnected(this)) {
             final IntentFilter filter = new IntentFilter();
             filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+            connectivityChangeReceiver = new ConnectivityChangeReceiver(this);
             super.registerReceiver(connectivityChangeReceiver, filter);
             Toast.makeText(this, getString(R.string.internet_connect), Toast.LENGTH_SHORT).show();
 
@@ -106,8 +106,8 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
 
     @Override
     public void errorMessage(String errCode) {
-        if(isInForeground)
-            Toast.makeText(this,getResources().getString(R.string.error_message) + errCode, Toast.LENGTH_SHORT).show();
+        if (isInForeground)
+            Toast.makeText(this, getResources().getString(R.string.error_message) + errCode, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -156,7 +156,8 @@ public class HomeScreen extends RaiffeisenActivity implements HomeView, UsersLis
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        unregisterReceiver(connectivityChangeReceiver);
+        if (connectivityChangeReceiver != null)
+            unregisterReceiver(connectivityChangeReceiver);
     }
 
     @Override
