@@ -82,7 +82,7 @@ public class UserDetails extends RaiffeisenActivity {
 
     private void initView() {
 
-        Picasso.with(this).load(user.getPicture().getLarge()).into(profilPic, new Callback() {
+        Picasso.with(this).load(user.getPicture().getMedium()).into(profilPic, new Callback() {
             @Override
             public void onSuccess() {
                 profilPic.setOnTouchListener(new View.OnTouchListener() {
